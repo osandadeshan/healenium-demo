@@ -60,7 +60,7 @@ public void before() {
 ```
 
 ### Running the tests
-Run the tests with the proper locators at least once. After that, we make the following changes to "***index.html***" in the "***src/main/resources/checkout***" folder. (You can change any locators as you wish)
+Run the tests with the proper locators at least once using ***`mvn clean test`***. After that, we make the following changes to "***index.html***" in the "***src/main/resources/checkout***" folder. (You can change any locators as you wish)
 
 - **id="address"** to **id="address1"**
 - **id="cc-name"** to **id="card-name"**
@@ -95,7 +95,7 @@ serverPort = 7878
 
 **serverPort** - The above-mentioned server's port
 
-Run the tests using ***'mvn clean test'*** to generate a new report from the command line. A link to the report generated in the console will appear after a successful test run. 
+Run the tests using ***`mvn clean test`*** to generate a new report from the command line. A link to the report generated in the console will appear after a successful test run. 
 
 ![image](https://user-images.githubusercontent.com/9147189/137932747-b879f236-dbad-4db6-9f32-71922a08864d.png)
 
@@ -103,7 +103,7 @@ When you open the link in a browser, you'll get a list of all the locators that 
 
 ![image](https://user-images.githubusercontent.com/9147189/137934653-59a69eb5-954e-4fee-b475-c74c34ade9fc.png)
 
-This boilerplate also includes an Allure report as an added feature. After running ***'mvn clean test'***, run ***'allure serve target/allure-results'*** to generate the Allure report.
+This boilerplate also includes an Allure report as an added feature. After running ***`mvn clean test`***, run ***`allure serve target/allure-results`*** to generate the Allure report.
 
 By installing the **Healenium** IDE plugin, you can enable automatic locator updating feature into the IntelliJ IDEA. You can right-click on the locators you want to correct and select Healing Results. You'll see a little window with a list of fixed locators to choose from, along with their corresponding score.
 
