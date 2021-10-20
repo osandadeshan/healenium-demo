@@ -1,48 +1,53 @@
 # Healenium Demo
 
 ## What is Healenium?
-[Healenium](https://healenium.io/) is an open-source testing framework extension that improves the stability of Selenium-based test cases by handling updated web and mobile elements. Web and mobile applications are updated constantly every sprint, which may lead to a locator change. Healenium uses a type of machine-learning algorithm to analyze the current page state for changes, handle ***NoSuchElement*** test failures, and fix broken tests at runtime by replacing the failed locator with a new value that matches the best and performs an action with the new element successfully. After the test run, Healenium provides detailed reporting with the fixed locators and screenshots. In addition, it supports advanced features like a parallel test run, remote test run, iFrames, actions, selenide integration.
+[Healenium](https://healenium.io/) is an open-source test framework extension that enhances the stability of selenium-based test cases. It automatically handles the updated web and mobile elements. In practical scenarios, Web and mobile applications are updated constantly in every sprint and that may caused to locator changes. Healenium uses a type of machine-learning algorithm to analyze the current page state for changes, handle ***NoSuchElement*** test failures, and fix broken tests at runtime by replacing the failed locator with a new value that matches the best and performs an action with the new element successfully. After the test run, Healenium provides detailed reporting with the fixed locators and screenshots. In addition, it supports advanced features like a parallel test run, remote test run, iFrames, actions, selenide integration.
 
-All of that helps to reduce the effort to create reliable Selenium tests and reduces the number of test cases that failed due to non-product issues. In addition, it changes the focus on regressions instead of test maintenance.
+All of this decreases the time and effort required to write reliable Selenium tests, as well as the amount of test cases that fail due to test defects.
 
 ## How Does It Work?
-Healenium consists of a client part that integrates with test automation frameworks. It includes Tree-comparing dependency. An algorithm self-healing capabilities that analyzes the current DOM state searches in the current state for the best subsequence and generates a new CSS locator. It also implements Selenium WebDriver and overrides the findElement method, and if it catches the NoSuchElement exception, it triggers the Tree-comparing algorithm and starts self-healing.
+Healenium has a client component that connects to test automation frameworks. It has a Tree-comparison dependence in it. An algorithm with self-healing capabilities that examines the current DOM state and generates a new CSS locator by searching for the best subsequence in the current state. It also implements Selenium WebDriver and modifies the findElement method, triggering the Tree-comparing process and initiating self-healing if the NoSuchElement exception is caught.
 
-The back-end part of Healenium is a server that uses PostgreSQL database, which performs interactions between the client part, Tree-comparing, and the database that stores the old and new locator values as related information like DOM page, method name, class name, screenshots, etc.
+Healenium's backend is a server that uses a PostgreSQL database to execute interactions between the client and the database, which records old and new locator values as well as relevant information such as DOM page, method name, class name, screenshots, and so on.
 
-There are also plugins for Maven and Gradle that generate reports with healing results and communicate with the back-end to get information about the healing elements.
+There are also Maven and Gradle plugins that generate healing results reports and interact with the backend to obtain information about the healing elements.
 
-Healenium also provides a plugin for [IntelliJ IDEA](https://www.jetbrains.com/idea/) IDE for updating the codebase with the new values of the locators.
+Healenium also offers an [IntelliJ IDEA](https://www.jetbrains.com/idea/) plugin for updating the codebase with new location values.
 
 ## Demo Project
-We're going to use Java with Maven to set up a simple test project using the Page Object Pattern, and we'll integrate Healenium to test its functionality.
+This demo project incorporates Healenium and uses Java with Maven and the Page Object Pattern.
 
 ## Pre-requisites
 - [JetBrains IntelliJ IDEA](https://www.jetbrains.com/idea/)
 
-- [Docker Desktop](https://www.docker.com/products/docker-desktop) (feel free to use the Docker CLI only, we use it here because it's more user-friendly for beginners)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
-## How to use the Demo project?
+## How to use this Demo project?
 ### Starting the Healenium Backend
-1. Start a CMD/Terminal in the healenium directory (make sure Docker is up and running) and type:
+1. First, make sure Docker is up and running.
+
+2. Open a Command Prompt or Terminal in the "***healenium***" directory and execute:
 
 ***`docker-compose up -d`***
 
-2. Wait for docker to download the images and finish the setup. Verify you have healenium backend and database containers running using the Docker Desktop UI.
+![image](https://user-images.githubusercontent.com/9147189/138021369-c61c225b-1d1c-4a55-940c-229d124e899f.png)
 
-Or type 
+3. Wait for docker to download the images and finish the setup.
 
-***`docker ps`***
+4. Using the Docker Desktop UI, check that the Healenium backend and database containers are running.
 
 ![image](https://user-images.githubusercontent.com/9147189/137907488-635861d4-f68a-4e00-83df-3fcb4fffe849.png)
 
+Or you can execute ***`docker ps`*** and check that.
+
 ### Integrating Healenium in tests
-Integrating Healenium in your framework is easy as adding one line of code. All you have to do is wrap the WebDriver in the new SelfHealingDriver. 
-But, before that you have to import 
+It's as simple as writing one line of code to integrate Healenium into your framework. Wrapping the WebDriver in the new SelfHealingDriver is all that's required.
+
+But, before that you have to import,
 
 ***`import com.epam.healenium.SelfHealingDriver;`***
 
-Example code:
+**Example code:**
 
 ```java
 @BeforeMethod
@@ -55,7 +60,7 @@ public void before() {
 ```
 
 ### Running the project
-Run the tests at least once with the correct locators. After that, we go to the index.html located in the "***src/main/resources/checkout***" folder and make the following changes (you can try other changes if you want)
+Run the tests with the proper locators at least once. After that, we make the following changes to index.html in the "***src/main/resources/checkout***" folder. (You can change any locators as you wish)
 
 - **id="address"** to **id="address1"**
 - **id="cc-name"** to **id="card-name"**
@@ -64,12 +69,13 @@ Run the tests at least once with the correct locators. After that, we go to the 
 - **id="cc-cvv"** to **id="card-cvv"**
 - **Continue to checkout** to **Checkout**
 
-Normally this would break the locators as they depend on exact matches. Using the self-healing driver, though, the test will pass as the locators will be healed at runtime.
+Normally, this would cause the locators to malfunction because they rely on exact matches. The test will pass because the self-healing driver is used, and it will heal the locators during runtime.
+
 ![image](https://user-images.githubusercontent.com/9147189/137924473-815e8470-bf57-4a8c-9d62-53fb6e62dad4.png)
 
-Red boxes indicate that the locator has been fixed, and as you can see, the action has been properly executed.
+The locator has been fixed, and the action has been appropriately done, as indicated by the red boxes.
 
-Suppose you want to further configure Healenium for matching score cap or recovery tries. In that case, you have to create a file called "***healenium.properties***" and put it in the test resources directory at "***src/test/resources***". This is the content of the file:
+Let's say you want to fine-tune Healenium to include a score cap or recovery tries. In such scenario, create a file called "***healenium.properties***" and place it in the test resources ("***src/test/resources***") directory. The following is the file's content:
 
 ```
 recovery-tries = 1
@@ -79,26 +85,26 @@ serverHost = localhost
 serverPort = 7878
 ```
 
-**recovery-tries** is the number of times the algorithm will try to find a matching locator
+**recovery-tries** - The number of times the algorithm will try to discover a matched locator.
 
-**score-cap** is the minimum matching score required for the found locator to be accepted. 0.5 stands for 50%
+**score-cap** - The minimum matching score required for the detected locator to be accepted (50% is represented by the number 0.5).
 
-**heal-enabled** is an option to toggle the healing on or off. The accepted values are true and false
+**heal-enabled** - A toggle switch that turns healing on or off. True and false are the accepted values.
 
-**serverHost** is the URL of the Docker Container server that we created while setting up the back-end
+**serverHost** - The URL of the Docker Container server that we established while setting up the backend.
 
-**serverPort** is the port of the server mentioned above
+**serverPort** - The above-mentioned server's port
 
-To generate a new report, run the tests through the command line using ***`mvn clean test`***. After a successful test run, you'll see a link to the report generated in the console: 
+Run the tests using ***'mvn clean test'*** to generate a new report from the command line. A link to the report generated in the console will appear after a successful test run. 
 
 ![image](https://user-images.githubusercontent.com/9147189/137932747-b879f236-dbad-4db6-9f32-71922a08864d.png)
 
-After you open the link in a browser, you'll see a list of all the locators that have been fixed with their old and new values, as well as screenshots of the page on the places the locators have been fixed. There's a switch on the right side where you can check if the locator has been successfully resolved with the correct one or not.
+When you open the link in a browser, you'll get a list of all the locators that have been fixed, along with screenshots of the page where the locators have been fixed. On the right side, there's a switch to see if the locator has been properly resolved with the correct one.
 
 ![image](https://user-images.githubusercontent.com/9147189/137934653-59a69eb5-954e-4fee-b475-c74c34ade9fc.png)
 
-As an extra feature, this boilerplate has inbuilt Allure report. After ***`mvn clean test`*** is executed, allure report can be generated using ***`allure serve target/allure-results`*** command.
+This boilerplate also includes an Allure report as an added feature. After running ***'mvn clean test'***, run ***'allure serve target/allure-results'*** to generate the Allure report.
 
-You can further integrate it into the IntelliJ IDEA IDE by downloading the IDE plugin called **Healenium**. It would be best to go to the locators you want to fix, right-click and choose Healing Results. You'll get a small window showing you a list of fixed locators you can choose from, as well as their matching score:
+By installing the **Healenium** IDE plugin, you can enable automatic locator updating feature into the IntelliJ IDEA. You can right-click on the locators you want to correct and select Healing Results. You'll see a little window with a list of fixed locators to choose from, along with their corresponding score.
 
 ![image](https://user-images.githubusercontent.com/9147189/137936516-f7ef7087-06d5-44f5-8ead-feb57a63fb6f.png)
