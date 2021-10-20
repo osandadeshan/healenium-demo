@@ -60,7 +60,7 @@ public void before() {
 ```
 
 ### Running the project
-Run the tests with the proper locators at least once. After that, we make the following changes to index.html in the "***src/main/resources/checkout***" folder. (You can change any locators as you wish)
+Run the tests with the proper locators at least once. After that, we make the following changes to "***index.html***" in the "***src/main/resources/checkout***" folder. (You can change any locators as you wish)
 
 - **id="address"** to **id="address1"**
 - **id="cc-name"** to **id="card-name"**
