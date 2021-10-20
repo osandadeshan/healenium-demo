@@ -22,7 +22,7 @@ This demo project incorporates Healenium and uses Java with Maven and the Page O
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
-## How to use this Demo project?
+## How to run this Demo project?
 ### Starting the Healenium Backend
 1. First, make sure Docker is up and running.
 
